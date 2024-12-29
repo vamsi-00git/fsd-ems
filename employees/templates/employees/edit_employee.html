@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Employee</title>
+    <style>
+        body {
+            background-color: #004aad;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 36px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            color: #000;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        input[type="file"], 
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            text-align: center;
+            border-radius: 2rem;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        select {
+            margin-top: 5px;
+            padding: 8px;
+        }
+
+        button {
+            background-color: #004aad;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #003080;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Employee Details</h1>
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ employee.name }}" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ employee.email }}" required>
+            
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" value="{{ employee.mobile }}" required>
+            
+            <label for="designation">Designation:</label>
+            <select id="designation" name="designation" required>
+                {% for value, display in designation_choices %}
+                <option value="{{ value }}" {% if employee.designation == value %}selected{% endif %}>{{ display }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="gender">Gender:</label>
+            <div style="text-align: center;">
+                <input type="radio" id="male" name="gender" value="Male" {% if employee.gender == 'Male' %}checked{% endif %}> Male
+                <input type="radio" id="female" name="gender" value="Female" {% if employee.gender == 'Female' %}checked{% endif %}> Female
+            </div>
+            
+            <label for="courses">Courses:</label>
+            <div style="text-align: center;">
+                <input type="checkbox" id="python" name="courses" value="Python" {% if 'Python' in employee.courses %}checked{% endif %}> Python
+                <input type="checkbox" id="django" name="courses" value="Django" {% if 'Django' in employee.courses %}checked{% endif %}> Django
+                <input type="checkbox" id="ml" name="courses" value="Machine Learning" {% if 'Machine Learning' in employee.courses %}checked{% endif %}> Machine Learning
+            </div>
+            
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            
+            <button type="submit">Save Changes</button>
+            <a style="display: flex;justify-content: center;color:white; background-color: red;border-radius: 2rem;margin-left: 40%;margin-right: 40%;padding: 10px;" href="{% url 'employees:admin_employee_list' %}">Go back</a>
+        </form>
+    </div>
+    <script src="{% static 'js/validation.js' %}"></script>
+</body>
+</html>

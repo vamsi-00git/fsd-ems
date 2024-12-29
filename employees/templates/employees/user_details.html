@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Details</title>
+</head>
+<body>
+    <h1>User Details</h1>
+    <p>Name: {{ employee.name }}</p>
+    <p>Email: {{ employee.email }}</p>
+    <p>Mobile: {{ employee.mobile }}</p>
+    <p>Designation: {{ employee.designation }}</p>
+    <p>Gender: {{ employee.gender }}</p>
+    <p>Courses: {{ employee.courses }}</p>
+    <img src="{{ employee.image.url }}" alt="Employee Image" style="width:200px; height:auto;">
+    <a href="{% url 'employees:logout' %}">Logout</a>
+</body>
+</html>
